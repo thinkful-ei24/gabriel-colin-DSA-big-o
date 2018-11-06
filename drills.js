@@ -158,3 +158,79 @@ const iterativeReverse = str => {
   }
   return newStr;
 };
+
+// Recursive --> linear O(n)
+function triangle(num) {
+  if (num <= 1) {
+        return 1;
+
+  }
+    return num + triangle(num - 1);
+}
+
+// Iterative --> linear O(n)
+function iterativeTriangle(num) {
+    let total = 0;
+
+  for (let i = 0; i <= num; i++) {
+        total = total + i;
+
+  }
+    return total;
+}
+
+// Recursive --> linear O(n) ticks will be directly proportional to the string size and number of seperators in the string
+const stringSplitter = (str, sep) => {
+  if(str.indexOf(sep) === -1){
+        return str;
+  }
+    const newStr = str.slice(0, str.indexOf(sep));
+    return newStr + stringSplitter(str.slice(str.indexOf(sep)+1), sep);
+
+};
+
+// Iterative --> linear O(n) only one for loop iteration to replace seperator with ' '
+const iterativeSplitter = (str, sep) => {
+    const splitStr = str.split('');
+  for(let i=0; i<splitStr.length; i++){
+    if(splitStr[i] === sep){
+            splitStr[i] = '';
+    }
+  }
+    return splitStr.join('');
+};
+
+// Recur --> linear O(n)
+function binary(num) {
+  if (num === 0) {
+        return '';
+  }
+    const remainder = num % 2;
+    return binary((num - remainder) / 2) + remainder;
+}
+
+// Iter --> linear O(n)
+function iterativeBinary(number) {
+    return number.toString(2);
+}
+
+// Recur --> linear O(n)
+const factorial = (num) => {
+  if(num === 1){
+        return 1;
+  }
+    return num * factorial(num-1);
+
+};
+
+// iter --> linear O(n)
+const iterativeFactorial = (num) => {
+    let prod = 1;
+  for (let i=1; i<=num; i++){
+        prod *= i;
+
+  }
+    return prod;
+
+};
+
