@@ -36,19 +36,17 @@ function naiveSearch(array, item) {
 
 // O(n^2), two for loops, with one nested in the other
 function createPairs(arr) {
-    for (let i = 0; i < arr.length; i++) {
-        for(let j = i+1; j < arr.length; j++) {
-            console.log(arr[i] + ", " +  arr[j] );
-        }
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = i + 1; j < arr.length; j++) {
+      console.log(arr[i] + ', ' + arr[j]);
     }
+  }
 }
-
 
 // O(n), only one for loop
 function generateFib(num) {
-    let result = [];
+  let result = [];
   for (let i = 1; i <= num; i++) {
-
     // we're adding the first item
     // to the result list, append the
     // number 0 to results
@@ -71,7 +69,6 @@ function generateFib(num) {
   return result;
 }
 
-
 // O(logn) data is sorted and halved with each iteration
 function efficientSearch(array, item) {
   let minIndex = 0;
@@ -84,21 +81,80 @@ function efficientSearch(array, item) {
     currentElement = array[currentIndex];
     if (currentElement < item) {
       minIndex = currentIndex + 1;
-    }
-    else if (currentElement > item) {
+    } else if (currentElement > item) {
       maxIndex = currentIndex - 1;
-    }
-    else {
+    } else {
       return currentIndex;
     }
   }
   return -1;
 }
 
-
 // O(1) only one operation possible
 function findRandomElement(arr) {
-      return arr[Math.floor(Math.random() * arr.length)];
+  return arr[Math.floor(Math.random() * arr.length)];
 }
 
+// O(n) single for loop increases proportionally to size of input
+function isPrime(n) {
+  // if n is less than 2 or a decimal, it's not prime
+  if (n < 2 || n % 1 != 0) {
+    return false;
+  }
+  // otherwise, check if `n` is divisible by any integer
+  // between 2 and n.
+  for (let i = 2; i < n; ++i) {
+    if (n % i == 0) return false;
+  }
+  return true;
+}
 
+// Recursive/iterative
+
+// Recur -> Linear O(n)
+const countingSheep = num => {
+  if (num === 0) {
+    return;
+  }
+  console.log(`${num} - Another sheep jump over the fence`);
+  return countingSheep(num - 1);
+};
+
+// Iterative -> Linear O(n)
+const counting = num => {
+  for (let i = num; i > 0; i--) {
+    console.log(`${i} - Another sheep jump over the fence`);
+  }
+};
+
+// Recur -> Linear O(n)
+function double(array) {
+  if (array.length === 0) {
+    return [];
+  }
+
+  const doubledNumber = array[0] * 2;
+
+  return [doubledNumber, ...double(array.slice(1))];
+}
+
+// Iter -> O(n)
+const doubledArray = [1, 2, 3].map(number => number * 2);
+
+// Recur -> Linear O(n)
+const reverseString = str => {
+  if (str === '') {
+    return '';
+  }
+  const newChar = str[str.length - 1];
+  return newChar + reverseString(str.slice(0, str.length - 1));
+};
+
+// Iter -> Linear O(n)
+const iterativeReverse = str => {
+  let newStr = '';
+  for (let i = str.length - 1; i >= 0; i--) {
+    newStr += str[i];
+  }
+  return newStr;
+};
