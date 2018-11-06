@@ -162,75 +162,145 @@ const iterativeReverse = str => {
 // Recursive --> linear O(n)
 function triangle(num) {
   if (num <= 1) {
-        return 1;
-
+    return 1;
   }
-    return num + triangle(num - 1);
+  return num + triangle(num - 1);
 }
 
 // Iterative --> linear O(n)
 function iterativeTriangle(num) {
-    let total = 0;
+  let total = 0;
 
   for (let i = 0; i <= num; i++) {
-        total = total + i;
-
+    total = total + i;
   }
-    return total;
+  return total;
 }
 
 // Recursive --> linear O(n) ticks will be directly proportional to the string size and number of seperators in the string
 const stringSplitter = (str, sep) => {
-  if(str.indexOf(sep) === -1){
-        return str;
+  if (str.indexOf(sep) === -1) {
+    return str;
   }
-    const newStr = str.slice(0, str.indexOf(sep));
-    return newStr + stringSplitter(str.slice(str.indexOf(sep)+1), sep);
-
+  const newStr = str.slice(0, str.indexOf(sep));
+  return newStr + stringSplitter(str.slice(str.indexOf(sep) + 1), sep);
 };
 
 // Iterative --> linear O(n) only one for loop iteration to replace seperator with ' '
 const iterativeSplitter = (str, sep) => {
-    const splitStr = str.split('');
-  for(let i=0; i<splitStr.length; i++){
-    if(splitStr[i] === sep){
-            splitStr[i] = '';
+  const splitStr = str.split('');
+  for (let i = 0; i < splitStr.length; i++) {
+    if (splitStr[i] === sep) {
+      splitStr[i] = '';
     }
   }
-    return splitStr.join('');
+  return splitStr.join('');
 };
 
 // Recur --> linear O(n)
 function binary(num) {
   if (num === 0) {
-        return '';
+    return '';
   }
-    const remainder = num % 2;
-    return binary((num - remainder) / 2) + remainder;
+  const remainder = num % 2;
+  return binary((num - remainder) / 2) + remainder;
 }
 
 // Iter --> linear O(n)
 function iterativeBinary(number) {
-    return number.toString(2);
+  return number.toString(2);
 }
 
 // Recur --> linear O(n)
-const factorial = (num) => {
-  if(num === 1){
-        return 1;
+const factorial = num => {
+  if (num === 1) {
+    return 1;
   }
-    return num * factorial(num-1);
-
+  return num * factorial(num - 1);
 };
 
 // iter --> linear O(n)
-const iterativeFactorial = (num) => {
-    let prod = 1;
-  for (let i=1; i<=num; i++){
-        prod *= i;
-
+const iterativeFactorial = num => {
+  let prod = 1;
+  for (let i = 1; i <= num; i++) {
+    prod *= i;
   }
-    return prod;
-
+  return prod;
 };
 
+// Recur -> Linear O(n) / O(n^2)?
+function fibonacci(num) {
+  if (num <= 2) {
+    return 1;
+  }
+
+  return fibonacci(num - 1) + fibonacci(num - 2);
+}
+
+// Iter -> Linear O(n)
+function iterativeFibonacci(num) {
+  let prevNumOne = 1;
+  let prevNumTwo = 1;
+  let fiboNum;
+
+  for (let i = 3; i <= num; i++) {
+    fiboNum = prevNumOne + prevNumTwo;
+
+    prevNumOne = prevNumTwo;
+    prevNumTwo = fiboNum;
+  }
+  return fiboNum;
+}
+
+// Recur -> O(2^n)
+const allAnagrams = word => {
+  const results = {};
+  const anagram = (word, ana = '') => {
+    if (word === '') {
+      results[ana] = '';
+      return;
+    }
+    // loop through word so each letter is a prefix
+    for (let i = 0; i < word.length; i++) {
+      let newStr = word.slice(0, i) + word.slice(i + 1, word.length);
+      anagram(newStr, ana + word[i]);
+    }
+  };
+  anagram(word, '');
+  console.log(Object.keys(results));
+};
+
+// Iter -> exponential O(2^n)
+function swap(chars, i, j) {
+  var tmp = chars[i];
+  chars[i] = chars[j];
+  chars[j] = tmp;
+}
+
+function iterativeAnagrams(input) {
+  var counter = [],
+    anagrams = [],
+    chars = input.split(''),
+    length = chars.length,
+    i;
+
+  for (i = 0; i < length; i++) {
+    counter[i] = 0;
+  }
+
+  anagrams.push(input);
+  i = 0;
+  while (i < length) {
+    if (counter[i] < i) {
+      swap(chars, i % 2 === 1 ? counter[i] : 0, i);
+      counter[i]++;
+      i = 0;
+      anagrams.push(chars.join(''));
+    } else {
+      counter[i] = 0;
+      i++;
+    }
+  }
+
+  return anagrams;
+}
